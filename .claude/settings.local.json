@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-expo-app@latest apps/mobile --template blank-typescript)",
+      "Bash(npx expo:*)",
+      "Bash(npm install:*)",
+      "Bash(docker compose:*)",
+      "Bash(npm run:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx tsx:*)",
+      "Bash(curl -s http://localhost:3001/health)",
+      "Bash(curl -s -X POST http://localhost:3001/auth/register -H \"Content-Type: application/json\" -d '{\"\"\"\"name\"\"\"\":\"\"\"\"Test User\"\"\"\",\"\"\"\"email\"\"\"\":\"\"\"\"test@example.com\"\"\"\",\"\"\"\"password\"\"\"\":\"\"\"\"secret123\"\"\"\"}')",
+      "Bash(python -m json.tool)",
+      "Bash(curl -s -X POST http://localhost:3001/auth/register -H \"Content-Type: application/json\" -d \"{\"\"name\"\":\"\"Test User\"\",\"\"email\"\":\"\"test@example.com\"\",\"\"password\"\":\"\"secret123\"\"}\")",
+      "Bash(__NEW_LINE_97a6b446167e007e__ echo:*)",
+      "Bash(curl -s -X POST http://localhost:3001/auth/register -H \"Content-Type: application/json\" -d \"{\"\"name\"\":\"\"Test User\"\",\"\"email\"\":\"\"newuser@example.com\"\",\"\"password\"\":\"\"secret123\"\"}\")",
+      "Bash(__NEW_LINE_75edbc14dfa1056e__ echo:*)",
+      "Bash(curl -s -X POST http://localhost:3001/auth/login -H \"Content-Type: application/json\" -d \"{\"\"email\"\":\"\"admin@zuiphok.local\"\",\"\"password\"\":\"\"admin1234\"\"}\")",
+      "Bash(find C:/Git/zuiphok-games -name package.json -path */node_modules/react/package.json)",
+      "Bash(find C:/Git/zuiphok-games/apps -name package.json -path */node_modules/react/package.json)",
+      "Bash(netstat -ano)",
+      "Bash(adb shell:*)",
+      "Read(//c/Git/zuiphok-games/$LOCALAPPDATA/Android/Sdk/platform-tools/**)",
+      "Read(//c/Git/zuiphok-games/$HOME/AppData/Local/Android/Sdk/platform-tools/**)",
+      "Read(//c/Users/**)",
+      "Bash(ADB=\"C:/Users/Bartg/AppData/Local/Android/Sdk/platform-tools/adb.exe\")",
+      "Bash(\"$ADB\" shell:*)",
+      "Bash(ADB=\"C:/Users/Bartg/AppData/Local/Android/Sdk/platform-tools/adb.exe\" \"$ADB\" shell pm list packages)",
+      "Bash(ADB=\"C:/Users/Bartg/AppData/Local/Android/Sdk/platform-tools/adb.exe\" \"$ADB\" devices)",
+      "Bash(find C:/Users/Bartg -name *.apk -path *expo*)",
+      "Bash(find C:/Users/Bartg/AppData -name *.apk -path *expo*)",
+      "Bash(\"$ADB\" install:*)"
+    ]
+  }
+}
