@@ -37,6 +37,7 @@
       "bundler": "metro"
     },
     "plugins": [
+      "./plugins/withCleartextTraffic",
       "expo-router",
       "expo-secure-store",
       [

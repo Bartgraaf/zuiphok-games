@@ -1,11 +1,7 @@
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store'
-import Constants from 'expo-constants'
 
-const BASE_URL =
-  process.env.EXPO_PUBLIC_API_URL ??
-  (Constants.expoConfig?.extra?.apiUrl as string | undefined) ??
-  'http://10.0.2.2:3001'
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://10.0.2.2:3001'
 
 export const api = axios.create({
   baseURL: BASE_URL,
