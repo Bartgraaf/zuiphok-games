@@ -30,7 +30,7 @@ export default function JoinGameScreen() {
   const queryClient = useQueryClient()
 
   const { mutate: findGame, isPending: isFinding } = useMutation({
-    mutationFn: () => gamesService.findByCode(code.trim().toUpperCase()),
+    mutationFn: () => gamesService.findByCode(code.trim()),
     onSuccess: (game) => setFoundGame(game),
     onError: (err: Error) => Alert.alert('Not found', err.message),
   })

@@ -122,7 +122,7 @@ export default function GameDetailScreen() {
           {isAdmin && (
             <TouchableOpacity
               className="flex-row items-center gap-2 mt-1"
-              onPress={() => Share.share({ message: `Join my game with code: ${game.inviteCode}` })}
+              onPress={() => Share.share({ message: game.inviteCode })}
             >
               <Ionicons name="share-outline" size={16} color="#1A8917" />
               <Text className="text-[#1A8917] text-sm font-mono">{game.inviteCode}</Text>
@@ -186,7 +186,7 @@ export default function GameDetailScreen() {
             <Text className="text-gray-900 text-lg font-bold">Teams ({game._count.teams})</Text>
             {isAdmin && (
               <TouchableOpacity onPress={() => router.push(`/(app)/games/${id}/teams/`)}>
-                <Ionicons name="people-outline" size={22} color="#1A8917" />
+                <Ionicons name="add-circle-outline" size={24} color="#1A8917" />
               </TouchableOpacity>
             )}
           </View>

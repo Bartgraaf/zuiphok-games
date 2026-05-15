@@ -48,7 +48,7 @@ export default function GamesScreen() {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={() => router.push('/(app)/games/join')} className="mr-4">
-            <Ionicons name="enter-outline" size={24} color="#1A8917" />
+            <Ionicons name="add-circle" size={28} color="#1A8917" />
           </TouchableOpacity>
         ),
     })

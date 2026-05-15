@@ -72,6 +72,8 @@ export default function LoginScreen() {
                 placeholder="••••••••"
                 secureTextEntry
                 autoComplete="password"
+                returnKeyType="go"
+                onSubmitEditing={handleSubmit(onSubmit)}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
