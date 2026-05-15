@@ -98,8 +98,8 @@ export default function TeamReviewScreen() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-slate-900 items-center justify-center">
-        <ActivityIndicator color="#3b82f6" />
+      <View className="flex-1 bg-white items-center justify-center">
+        <ActivityIndicator color="#1A8917" />
       </View>
     )
   }
@@ -107,36 +107,36 @@ export default function TeamReviewScreen() {
   return (
     <>
       <ScrollView
-        className="flex-1 bg-slate-900"
-        refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} tintColor="#3b82f6" />}
+        className="flex-1 bg-white"
+        refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} tintColor="#1A8917" />}
       >
         <Stack.Screen options={{ title: team?.name ?? 'Team Review' }} />
 
         <View className="px-4 pt-4 pb-8">
           {/* Team summary */}
-          <View className="bg-slate-800 rounded-2xl p-4 mb-5 border border-slate-700">
-            <Text className="text-white text-xl font-bold mb-3">{team?.name}</Text>
+          <View className="bg-gray-50 rounded-2xl p-4 mb-5 border border-gray-200">
+            <Text className="text-gray-900 text-xl font-bold mb-3">{team?.name}</Text>
             <View className="flex-row gap-4">
               <View className="items-center flex-1">
-                <Text className="text-blue-400 text-lg font-bold">{completedTasks.length}/{tasks.length}</Text>
-                <Text className="text-slate-500 text-xs">Completed</Text>
+                <Text className="text-[#1A8917] text-lg font-bold">{completedTasks.length}/{tasks.length}</Text>
+                <Text className="text-gray-400 text-xs">Completed</Text>
               </View>
-              <View className="w-px bg-slate-700" />
+              <View className="w-px bg-gray-100" />
               <View className="items-center flex-1">
-                <Text className="text-green-400 text-lg font-bold">{earnedPoints}/{totalPoints}</Text>
-                <Text className="text-slate-500 text-xs">Points</Text>
+                <Text className="text-[#1A8917] text-lg font-bold">{earnedPoints}/{totalPoints}</Text>
+                <Text className="text-gray-400 text-xs">Points</Text>
               </View>
-              <View className="w-px bg-slate-700" />
+              <View className="w-px bg-gray-100" />
               <View className="items-center flex-1">
-                <Text className="text-slate-300 text-lg font-bold">{submissions.length}</Text>
-                <Text className="text-slate-500 text-xs">Submissions</Text>
+                <Text className="text-gray-600 text-lg font-bold">{submissions.length}</Text>
+                <Text className="text-gray-400 text-xs">Submissions</Text>
               </View>
             </View>
 
             {team?.members && team.members.length > 0 && (
-              <View className="flex-row flex-wrap gap-2 mt-3 pt-3 border-t border-slate-700">
+              <View className="flex-row flex-wrap gap-2 mt-3 pt-3 border-t border-gray-200">
                 {team.members.map((m: any) => (
-                  <Text key={m.id} className="text-slate-400 text-xs bg-slate-700 rounded-full px-2 py-0.5">
+                  <Text key={m.id} className="text-gray-500 text-xs bg-gray-100 rounded-full px-2 py-0.5">
                     {m.user.name}
                   </Text>
                 ))}
@@ -153,16 +153,16 @@ export default function TeamReviewScreen() {
             return (
               <View key={task.id} className="mb-4">
                 {/* Task header */}
-                <View className={`rounded-xl p-3 border mb-1 ${isComplete ? 'bg-green-950 border-green-800' : 'bg-slate-800 border-slate-700'}`}>
+                <View className={`rounded-xl p-3 border mb-1 ${isComplete ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'}`}>
                   <View className="flex-row items-center justify-between">
                     <View className="flex-row items-center gap-2 flex-1">
                       <Ionicons
                         name={isComplete ? 'checkmark-circle' : 'ellipse-outline'}
                         size={18}
-                        color={isComplete ? '#4ade80' : '#475569'}
+                        color={isComplete ? '#4ade80' : '#9CA3AF'}
                       />
-                      <Text className="text-white font-semibold flex-1" numberOfLines={1}>{task.title}</Text>
-                      <Text className="text-blue-400 font-bold text-sm">{task.points}pt</Text>
+                      <Text className="text-gray-900 font-semibold flex-1" numberOfLines={1}>{task.title}</Text>
+                      <Text className="text-[#1A8917] font-bold text-sm">{task.points}pt</Text>
                     </View>
                   </View>
 
@@ -170,28 +170,28 @@ export default function TeamReviewScreen() {
                   <View className="mt-2 flex-row items-center justify-between">
                     {isComplete ? (
                       <>
-                        <Text className="text-green-400 text-xs">
+                        <Text className="text-[#1A8917] text-xs">
                           Marked by {completion.markedBy.name} · {new Date(completion.markedAt).toLocaleDateString()}
                         </Text>
                         <TouchableOpacity
-                          className="bg-slate-700 rounded-full px-3 py-1"
+                          className="bg-gray-100 rounded-full px-3 py-1"
                           onPress={() => unmarkComplete(task.id)}
                           disabled={isUnmarking}
                         >
-                          <Text className="text-slate-300 text-xs">Unmark</Text>
+                          <Text className="text-gray-600 text-xs">Unmark</Text>
                         </TouchableOpacity>
                       </>
                     ) : (
                       <>
-                        <Text className="text-slate-500 text-xs">
+                        <Text className="text-gray-400 text-xs">
                           {taskSubs.length} submission{taskSubs.length !== 1 ? 's' : ''}
                         </Text>
                         <TouchableOpacity
-                          className={`rounded-full px-3 py-1 ${taskSubs.length > 0 ? 'bg-green-700' : 'bg-slate-700 opacity-50'}`}
+                          className={`rounded-full px-3 py-1 ${taskSubs.length > 0 ? 'bg-green-700' : 'bg-gray-100 opacity-50'}`}
                           onPress={() => markComplete(task.id)}
                           disabled={isMarking}
                         >
-                          <Text className="text-white text-xs font-medium">Mark Complete</Text>
+                          <Text className="text-gray-900 text-xs font-medium">Mark Complete</Text>
                         </TouchableOpacity>
                       </>
                     )}
@@ -201,22 +201,22 @@ export default function TeamReviewScreen() {
                 {/* Submissions */}
                 {taskSubs.length > 0 ? (
                   taskSubs.map((sub) => (
-                    <View key={sub.id} className="bg-slate-800 rounded-xl p-3 mb-1 border border-slate-700 ml-6">
+                    <View key={sub.id} className="bg-gray-50 rounded-xl p-3 mb-1 border border-gray-200 ml-6">
                       <View className="flex-row items-center justify-between mb-2">
-                        <Text className="text-slate-300 text-sm font-medium">{sub.user.name}</Text>
-                        <Text className="text-slate-600 text-xs">
+                        <Text className="text-gray-600 text-sm font-medium">{sub.user.name}</Text>
+                        <Text className="text-gray-400 text-xs">
                           {new Date(sub.submittedAt).toLocaleString()}
                         </Text>
                       </View>
 
                       {sub.text ? (
-                        <Text className="text-white text-sm mb-2 leading-5">{sub.text}</Text>
+                        <Text className="text-gray-900 text-sm mb-2 leading-5">{sub.text}</Text>
                       ) : null}
 
                       {sub.locationLat != null && (
                         <View className="flex-row items-center gap-1 mb-2">
                           <Ionicons name="location" size={12} color="#4ade80" />
-                          <Text className="text-green-400 text-xs">
+                          <Text className="text-[#1A8917] text-xs">
                             {sub.locationLat.toFixed(4)}, {sub.locationLng?.toFixed(4)}
                           </Text>
                         </View>
@@ -227,7 +227,7 @@ export default function TeamReviewScreen() {
                           <View className="flex-row gap-2">
                             {sub.media.map((m) => (
                               <TouchableOpacity key={m.id} onPress={() => openMedia(m)} activeOpacity={0.8}>
-                                <View className="w-16 h-16 rounded-lg bg-slate-700 overflow-hidden">
+                                <View className="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden">
                                   {m.mimeType.startsWith('image') ? (
                                     <Image
                                       source={{ uri: `${BASE_URL}/uploads/${m.filePath}` }}
@@ -249,7 +249,7 @@ export default function TeamReviewScreen() {
                   ))
                 ) : (
                   <View className="ml-6 py-2">
-                    <Text className="text-slate-600 text-xs italic">No submission yet</Text>
+                    <Text className="text-gray-400 text-xs italic">No submission yet</Text>
                   </View>
                 )}
               </View>
@@ -257,7 +257,7 @@ export default function TeamReviewScreen() {
           })}
 
           {tasks.length === 0 && (
-            <Text className="text-slate-600 text-center py-8">No tasks in this game yet</Text>
+            <Text className="text-gray-400 text-center py-8">No tasks in this game yet</Text>
           )}
         </View>
       </ScrollView>

@@ -39,7 +39,7 @@ export default function CreateTaskScreen() {
   })
 
   return (
-    <ScrollView className="flex-1 bg-slate-900" keyboardShouldPersistTaps="handled">
+    <ScrollView className="flex-1 bg-white" keyboardShouldPersistTaps="handled">
       <View className="px-6 pt-6 pb-12">
         <Controller
           control={control}
@@ -75,15 +75,15 @@ export default function CreateTaskScreen() {
         />
 
         {/* Task Type */}
-        <Text className="text-slate-300 text-sm font-medium mb-2">Task Type</Text>
+        <Text className="text-gray-600 text-sm font-medium mb-2">Task Type</Text>
         <View className="flex-row gap-2 mb-4 flex-wrap">
           {TASK_TYPES.map((type) => (
             <TouchableOpacity
               key={type}
               onPress={() => setValue('taskType', type)}
-              className={`rounded-xl px-4 py-2 border ${selectedType === type ? 'bg-blue-700 border-blue-500' : 'bg-slate-800 border-slate-700'}`}
+              className={`rounded-xl px-4 py-2 border ${selectedType === type ? 'bg-[#166d12] border-blue-500' : 'bg-gray-50 border-gray-200'}`}
             >
-              <Text className={`text-sm font-medium ${selectedType === type ? 'text-white' : 'text-slate-400'}`}>
+              <Text className={`text-sm font-medium ${selectedType === type ? 'text-gray-900' : 'text-gray-500'}`}>
                 {type}
               </Text>
             </TouchableOpacity>
@@ -107,13 +107,13 @@ export default function CreateTaskScreen() {
         />
 
         {/* Requires Location */}
-        <View className="flex-row items-center justify-between bg-slate-800 rounded-xl px-4 py-3 mb-4 border border-slate-700">
-          <Text className="text-slate-300 text-sm font-medium">Requires GPS location</Text>
+        <View className="flex-row items-center justify-between bg-gray-50 rounded-xl px-4 py-3 mb-4 border border-gray-200">
+          <Text className="text-gray-600 text-sm font-medium">Requires GPS location</Text>
           <Switch
             value={requiresLocation}
             onValueChange={(v) => setValue('requiresLocation', v)}
-            trackColor={{ false: '#334155', true: '#1d4ed8' }}
-            thumbColor={requiresLocation ? '#3b82f6' : '#64748b'}
+            trackColor={{ false: '#E5E7EB', true: '#1A8917' }}
+            thumbColor={requiresLocation ? '#1A8917' : '#9CA3AF'}
           />
         </View>
 

@@ -3,6 +3,7 @@ import { Link, router } from 'expo-router'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema, LoginInput } from '@zuiphok/shared'
+import { Ionicons } from '@expo/vector-icons'
 import { useAuthStore } from '../../src/store/auth'
 import { Input } from '../../src/components/ui/Input'
 import { Button } from '../../src/components/ui/Button'
@@ -22,7 +23,7 @@ export default function LoginScreen() {
       await login(data.email, data.password)
       router.replace('/(app)/')
     } catch (err: any) {
-      Alert.alert('Login failed', err.message)
+      Alert.alert('Oops!', err.message)
     } finally {
       setLoading(false)
     }
@@ -31,15 +32,18 @@ export default function LoginScreen() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-slate-900"
+      className="flex-1 bg-white"
     >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View className="flex-1 justify-center px-6 py-12">
-          <Text className="text-white text-4xl font-bold mb-2">Welcome back</Text>
-          <Text className="text-slate-400 text-base mb-10">Sign in to your account</Text>
+
+          <View className="items-center mb-8">
+            <View className="bg-[#1A8917] rounded-3xl p-5 mb-4">
+              <Ionicons name="game-controller" size={40} color="white" />
+            </View>
+            <Text className="text-gray-900 text-3xl font-bold">Welcome back!</Text>
+            <Text className="text-gray-500 text-base mt-1">Ready to play?</Text>
+          </View>
 
           <Controller
             control={control}
@@ -76,16 +80,12 @@ export default function LoginScreen() {
             )}
           />
 
-          <Button
-            title="Sign In"
-            onPress={handleSubmit(onSubmit)}
-            loading={loading}
-          />
+          <Button title="Let's Go!" onPress={handleSubmit(onSubmit)} loading={loading} />
 
           <View className="flex-row justify-center mt-6">
-            <Text className="text-slate-400">Don't have an account? </Text>
+            <Text className="text-gray-500">No account yet? </Text>
             <Link href="/(auth)/register">
-              <Text className="text-blue-400 font-semibold">Sign up</Text>
+              <Text className="text-[#1A8917] font-bold">Sign up</Text>
             </Link>
           </View>
         </View>

@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, RefreshControl, Alert } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
 import { router, useNavigation } from 'expo-router'
 import { useLayoutEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -17,10 +17,16 @@ interface GameItem {
   _count: { teams: number; tasks: number }
 }
 
-const statusColors: Record<GameStatus, string> = {
-  DRAFT: 'bg-slate-700 text-slate-300',
-  ACTIVE: 'bg-green-900 text-green-300',
-  FINISHED: 'bg-slate-800 text-slate-500',
+const statusConfig: Record<GameStatus, { bg: string; text: string; dot: string; label: string }> = {
+  DRAFT:    { bg: 'bg-gray-100',   text: 'text-gray-600',  dot: 'bg-slate-400',  label: 'Draft' },
+  ACTIVE:   { bg: 'bg-green-100', text: 'text-[#1A8917]', dot: 'bg-emerald-400', label: 'Live' },
+  FINISHED: { bg: 'bg-gray-50',   text: 'text-gray-400',  dot: 'bg-gray-200',  label: 'Done' },
+}
+
+const statusBorder: Record<GameStatus, string> = {
+  DRAFT:    'border-gray-200',
+  ACTIVE:   'border-emerald-800',
+  FINISHED: 'border-gray-200',
 }
 
 export default function GamesScreen() {
@@ -38,51 +44,66 @@ export default function GamesScreen() {
       headerRight: () =>
         isAdmin ? (
           <TouchableOpacity onPress={() => router.push('/(app)/games/create')} className="mr-4">
-            <Ionicons name="add" size={26} color="#3b82f6" />
+            <Ionicons name="add-circle" size={28} color="#1A8917" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={() => router.push('/(app)/games/join')} className="mr-4">
-            <Ionicons name="enter-outline" size={22} color="#3b82f6" />
+            <Ionicons name="enter-outline" size={24} color="#1A8917" />
           </TouchableOpacity>
         ),
     })
   }, [isAdmin])
 
   return (
-    <View className="flex-1 bg-slate-900">
+    <View className="flex-1 bg-white">
       <FlatList
         data={games}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ padding: 16 }}
-        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#3b82f6" />}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            className="bg-slate-800 rounded-2xl p-4 mb-3 border border-slate-700"
-            onPress={() => router.push(`/(app)/games/${item.id}`)}
-          >
-            <View className="flex-row items-start justify-between mb-2">
-              <Text className="text-white text-lg font-semibold flex-1 mr-2">{item.name}</Text>
-              <View className={`rounded-full px-2.5 py-0.5 ${statusColors[item.status].split(' ')[0]}`}>
-                <Text className={`text-xs font-medium ${statusColors[item.status].split(' ')[1]}`}>
-                  {item.status}
-                </Text>
+        contentContainerStyle={{ padding: 16, paddingTop: 12 }}
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#1A8917" />}
+        renderItem={({ item }) => {
+          const cfg = statusConfig[item.status]
+          return (
+            <TouchableOpacity
+              className={`bg-gray-50 rounded-2xl p-4 mb-3 border ${statusBorder[item.status]}`}
+              onPress={() => router.push(`/(app)/games/${item.id}`)}
+              activeOpacity={0.75}
+            >
+              <View className="flex-row items-center justify-between mb-2">
+                <Text className="text-gray-900 text-lg font-bold flex-1 mr-3">{item.name}</Text>
+                <View className={`flex-row items-center gap-1.5 rounded-full px-2.5 py-1 ${cfg.bg}`}>
+                  <View className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+                  <Text className={`text-xs font-semibold ${cfg.text}`}>{cfg.label}</Text>
+                </View>
               </View>
-            </View>
-            {item.description && (
-              <Text className="text-slate-400 text-sm mb-3" numberOfLines={2}>{item.description}</Text>
-            )}
-            <View className="flex-row gap-4">
-              <Text className="text-slate-500 text-xs">{item._count.tasks} tasks</Text>
-              <Text className="text-slate-500 text-xs">{item._count.teams} teams</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+
+              {item.description && (
+                <Text className="text-gray-500 text-sm mb-3 leading-5" numberOfLines={2}>
+                  {item.description}
+                </Text>
+              )}
+
+              <View className="flex-row gap-4 pt-2 border-t border-gray-200">
+                <View className="flex-row items-center gap-1">
+                  <Ionicons name="checkmark-circle-outline" size={14} color="#1A8917" />
+                  <Text className="text-gray-500 text-xs">{item._count.tasks} tasks</Text>
+                </View>
+                <View className="flex-row items-center gap-1">
+                  <Ionicons name="people-outline" size={14} color="#1A8917" />
+                  <Text className="text-gray-500 text-xs">{item._count.teams} teams</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )
+        }}
         ListEmptyComponent={
           !isLoading ? (
             <View className="items-center py-24">
-              <Ionicons name="game-controller-outline" size={48} color="#334155" />
-              <Text className="text-slate-500 text-lg mt-4">No games yet</Text>
-              <Text className="text-slate-600 text-sm mt-1">
+              <View className="bg-gray-50 rounded-3xl p-6 mb-4">
+                <Ionicons name="game-controller-outline" size={48} color="#1A8917" />
+              </View>
+              <Text className="text-gray-900 text-xl font-bold">No games yet</Text>
+              <Text className="text-gray-400 text-sm mt-2 text-center">
                 {isAdmin ? 'Tap + to create your first game' : 'Ask an admin for an invite code'}
               </Text>
             </View>

@@ -26,9 +26,9 @@ export default function CreateGameScreen() {
   })
 
   return (
-    <ScrollView className="flex-1 bg-slate-900" keyboardShouldPersistTaps="handled">
+    <ScrollView className="flex-1 bg-white" keyboardShouldPersistTaps="handled">
       <View className="px-6 pt-6 pb-12">
-        <Text className="text-slate-400 mb-6">Create a new game and share the invite code with players.</Text>
+        <Text className="text-gray-500 mb-6">Create a new game and share the invite code with players.</Text>
 
         <Controller
           control={control}

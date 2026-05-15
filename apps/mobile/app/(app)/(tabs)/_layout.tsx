@@ -9,12 +9,12 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#1e293b', borderTopColor: '#334155' },
-        tabBarActiveTintColor: '#3b82f6',
-        tabBarInactiveTintColor: '#64748b',
-        headerStyle: { backgroundColor: '#0f172a' },
-        headerTintColor: '#f1f5f9',
-        headerTitleStyle: { fontWeight: 'bold' },
+        tabBarStyle: { backgroundColor: '#FFFFFF', borderTopColor: '#E5E7EB' },
+        tabBarActiveTintColor: '#1A8917',
+        tabBarInactiveTintColor: '#9CA3AF',
+        headerStyle: { backgroundColor: '#FFFFFF' },
+        headerTintColor: '#242424',
+        headerTitleStyle: { fontWeight: 'bold', color: '#242424' },
       }}
     >
       <Tabs.Screen

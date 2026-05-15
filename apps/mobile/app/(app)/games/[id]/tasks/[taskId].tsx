@@ -212,35 +212,35 @@ export default function TaskDetailScreen() {
   const showTextInput = task && ['TEXT', 'MIXED'].includes(task.taskType)
 
   return (
-    <ScrollView className="flex-1 bg-slate-900" keyboardShouldPersistTaps="handled">
+    <ScrollView className="flex-1 bg-white" keyboardShouldPersistTaps="handled">
       <Stack.Screen options={{ title: task?.title ?? 'Task' }} />
 
       {task && (
         <View className="px-4 pt-4 pb-8">
           {/* Task header */}
-          <View className="bg-slate-800 rounded-2xl p-4 mb-5 border border-slate-700">
+          <View className="bg-gray-50 rounded-2xl p-4 mb-5 border border-gray-200">
             <View className="flex-row items-center gap-2 mb-2">
-              <View className="bg-blue-900 rounded-full px-3 py-0.5">
-                <Text className="text-blue-300 text-xs font-medium">{task.taskType}</Text>
+              <View className="bg-green-50 rounded-full px-3 py-0.5">
+                <Text className="text-[#1A8917] text-xs font-medium">{task.taskType}</Text>
               </View>
-              <Text className="text-blue-400 font-bold">{task.points} pts</Text>
+              <Text className="text-[#1A8917] font-bold">{task.points} pts</Text>
               {task.requiresLocation && (
                 <View className="flex-row items-center gap-1">
-                  <Ionicons name="location-outline" size={13} color="#64748b" />
-                  <Text className="text-slate-500 text-xs">GPS required</Text>
+                  <Ionicons name="location-outline" size={13} color="#9CA3AF" />
+                  <Text className="text-gray-400 text-xs">GPS required</Text>
                 </View>
               )}
             </View>
-            <Text className="text-white text-xl font-bold">{task.title}</Text>
+            <Text className="text-gray-900 text-xl font-bold">{task.title}</Text>
             {task.description && (
-              <Text className="text-slate-400 mt-2 text-sm leading-5">{task.description}</Text>
+              <Text className="text-gray-500 mt-2 text-sm leading-5">{task.description}</Text>
             )}
           </View>
 
           {/* Previous submissions */}
           {submissions.length > 0 && (
             <View className="mb-6">
-              <Text className="text-white font-bold text-base mb-3">
+              <Text className="text-gray-900 font-bold text-base mb-3">
                 Team submissions ({submissions.length})
               </Text>
               {submissions.map((sub) => (
@@ -250,17 +250,17 @@ export default function TaskDetailScreen() {
           )}
 
           {/* Submission form */}
-          <Text className="text-white font-bold text-base mb-3">New submission</Text>
+          <Text className="text-gray-900 font-bold text-base mb-3">New submission</Text>
 
           {showTextInput && (
             <View className="mb-3">
-              <Text className="text-slate-300 text-sm font-medium mb-1">
+              <Text className="text-gray-600 text-sm font-medium mb-1">
                 Text {task.taskType !== 'TEXT' ? '(optional)' : ''}
               </Text>
               <TextInput
-                className="bg-slate-800 text-white rounded-xl px-4 py-3 border border-slate-700 text-sm"
+                className="bg-gray-50 text-gray-900 rounded-xl px-4 py-3 border border-gray-200 text-sm"
                 placeholder="Write your answer here…"
-                placeholderTextColor="#64748b"
+                placeholderTextColor="#9CA3AF"
                 multiline
                 numberOfLines={5}
                 style={{ height: 120, textAlignVertical: 'top' }}
@@ -268,7 +268,7 @@ export default function TaskDetailScreen() {
                 onChangeText={handleTextChange}
               />
               {teamId && text.length > 0 && (
-                <Text className="text-slate-600 text-xs mt-1">Draft autosaved</Text>
+                <Text className="text-gray-400 text-xs mt-1">Draft autosaved</Text>
               )}
             </View>
           )}
@@ -277,21 +277,21 @@ export default function TaskDetailScreen() {
           {task.requiresLocation && (
             <TouchableOpacity
               className={`flex-row items-center gap-2 rounded-xl px-4 py-3 mb-3 border ${
-                location ? 'bg-green-950 border-green-800' : 'bg-slate-800 border-slate-700'
+                location ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
               }`}
               onPress={captureLocation}
               disabled={isCapturingLocation}
             >
               {isCapturingLocation ? (
-                <ActivityIndicator size="small" color="#3b82f6" />
+                <ActivityIndicator size="small" color="#1A8917" />
               ) : (
                 <Ionicons
                   name={location ? 'location' : 'location-outline'}
                   size={18}
-                  color={location ? '#4ade80' : '#64748b'}
+                  color={location ? '#4ade80' : '#9CA3AF'}
                 />
               )}
-              <Text className={location ? 'text-green-400 text-sm' : 'text-slate-400 text-sm'}>
+              <Text className={location ? 'text-[#1A8917] text-sm' : 'text-gray-500 text-sm'}>
                 {location
                   ? `GPS captured (${location.lat.toFixed(4)}, ${location.lng.toFixed(4)})`
                   : 'Tap to capture GPS location'}
@@ -302,7 +302,7 @@ export default function TaskDetailScreen() {
           {/* Media picker */}
           {showMediaPicker && (
             <View className="mb-4">
-              <Text className="text-slate-300 text-sm font-medium mb-2">
+              <Text className="text-gray-600 text-sm font-medium mb-2">
                 Media {task.taskType === 'MIXED' ? '(optional)' : ''}
               </Text>
 
@@ -314,14 +314,14 @@ export default function TaskDetailScreen() {
                       <View key={i} className="relative">
                         <Image
                           source={{ uri: asset.uri }}
-                          className="w-20 h-20 rounded-lg bg-slate-700"
+                          className="w-20 h-20 rounded-lg bg-gray-100"
                           resizeMode="cover"
                         />
                         <TouchableOpacity
                           className="absolute -top-1.5 -right-1.5 bg-red-600 rounded-full w-5 h-5 items-center justify-center"
                           onPress={() => removeMedia(i)}
                         >
-                          <Text className="text-white text-xs font-bold leading-none">×</Text>
+                          <Text className="text-gray-900 text-xs font-bold leading-none">×</Text>
                         </TouchableOpacity>
                         {asset.mimeType.startsWith('video') && (
                           <View className="absolute inset-0 items-center justify-center">
@@ -336,18 +336,18 @@ export default function TaskDetailScreen() {
 
               <View className="flex-row gap-2">
                 <TouchableOpacity
-                  className="flex-1 flex-row items-center justify-center gap-2 bg-slate-800 border border-slate-700 rounded-xl py-3"
+                  className="flex-1 flex-row items-center justify-center gap-2 bg-gray-50 border border-gray-200 rounded-xl py-3"
                   onPress={takePhoto}
                 >
                   <Ionicons name="camera-outline" size={18} color="#94a3b8" />
-                  <Text className="text-slate-300 text-sm">Camera</Text>
+                  <Text className="text-gray-600 text-sm">Camera</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  className="flex-1 flex-row items-center justify-center gap-2 bg-slate-800 border border-slate-700 rounded-xl py-3"
+                  className="flex-1 flex-row items-center justify-center gap-2 bg-gray-50 border border-gray-200 rounded-xl py-3"
                   onPress={pickFromGallery}
                 >
                   <Ionicons name="images-outline" size={18} color="#94a3b8" />
-                  <Text className="text-slate-300 text-sm">Gallery</Text>
+                  <Text className="text-gray-600 text-sm">Gallery</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -355,17 +355,17 @@ export default function TaskDetailScreen() {
 
           {/* Submit button */}
           <TouchableOpacity
-            className={`rounded-xl py-4 items-center ${isSubmitting ? 'bg-blue-800 opacity-60' : 'bg-blue-600 active:bg-blue-700'}`}
+            className={`rounded-xl py-4 items-center ${isSubmitting ? 'bg-green-100 opacity-60' : 'bg-[#1A8917] active:bg-[#166d12]'}`}
             onPress={handleSubmit}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <View className="flex-row items-center gap-2">
                 <ActivityIndicator size="small" color="white" />
-                <Text className="text-white font-semibold">{uploadStatus}</Text>
+                <Text className="text-gray-900 font-semibold">{uploadStatus}</Text>
               </View>
             ) : (
-              <Text className="text-white font-semibold text-base">Submit</Text>
+              <Text className="text-gray-900 font-semibold text-base">Submit</Text>
             )}
           </TouchableOpacity>
 
@@ -382,20 +382,20 @@ function SubmissionCard({ submission, currentUserId }: { submission: Submission;
   const date = new Date(submission.submittedAt).toLocaleString()
 
   return (
-    <View className={`rounded-xl p-4 mb-2 border ${isOwn ? 'bg-blue-950 border-blue-800' : 'bg-slate-800 border-slate-700'}`}>
+    <View className={`rounded-xl p-4 mb-2 border ${isOwn ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'}`}>
       <View className="flex-row items-center justify-between mb-2">
-        <Text className="text-slate-300 text-sm font-medium">{submission.user.name}</Text>
-        <Text className="text-slate-600 text-xs">{date}</Text>
+        <Text className="text-gray-600 text-sm font-medium">{submission.user.name}</Text>
+        <Text className="text-gray-400 text-xs">{date}</Text>
       </View>
 
       {submission.text && (
-        <Text className="text-white text-sm mb-2 leading-5">{submission.text}</Text>
+        <Text className="text-gray-900 text-sm mb-2 leading-5">{submission.text}</Text>
       )}
 
       {submission.locationLat != null && (
         <View className="flex-row items-center gap-1 mb-2">
           <Ionicons name="location" size={12} color="#4ade80" />
-          <Text className="text-green-400 text-xs">
+          <Text className="text-[#1A8917] text-xs">
             {submission.locationLat.toFixed(4)}, {submission.locationLng?.toFixed(4)}
           </Text>
         </View>
@@ -405,7 +405,7 @@ function SubmissionCard({ submission, currentUserId }: { submission: Submission;
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View className="flex-row gap-2">
             {submission.media.map((m) => (
-              <View key={m.id} className="w-16 h-16 rounded-lg bg-slate-700 overflow-hidden">
+              <View key={m.id} className="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden">
                 {m.mimeType.startsWith('image') ? (
                   <Image
                     source={{ uri: `${BASE_URL}/uploads/${m.filePath}` }}
@@ -414,7 +414,7 @@ function SubmissionCard({ submission, currentUserId }: { submission: Submission;
                   />
                 ) : (
                   <View className="w-full h-full items-center justify-center">
-                    <Ionicons name="videocam" size={22} color="#64748b" />
+                    <Ionicons name="videocam" size={22} color="#9CA3AF" />
                   </View>
                 )}
               </View>
@@ -437,11 +437,11 @@ function UploadQueueBadge() {
   if (pending === 0 && failed === 0) return null
 
   return (
-    <View className="mt-4 bg-slate-800 rounded-xl p-3 border border-slate-700">
+    <View className="mt-4 bg-gray-50 rounded-xl p-3 border border-gray-200">
       {pending > 0 && (
         <View className="flex-row items-center gap-2">
-          <ActivityIndicator size="small" color="#3b82f6" />
-          <Text className="text-slate-400 text-sm">{pending} upload{pending > 1 ? 's' : ''} pending…</Text>
+          <ActivityIndicator size="small" color="#1A8917" />
+          <Text className="text-gray-500 text-sm">{pending} upload{pending > 1 ? 's' : ''} pending…</Text>
         </View>
       )}
       {failed > 0 && (

@@ -47,9 +47,9 @@ export default function JoinGameScreen() {
   })
 
   return (
-    <ScrollView className="flex-1 bg-slate-900" keyboardShouldPersistTaps="handled">
+    <ScrollView className="flex-1 bg-white" keyboardShouldPersistTaps="handled">
       <View className="px-6 pt-6 pb-12">
-        <Text className="text-slate-400 mb-6">Enter the invite code from your game admin.</Text>
+        <Text className="text-gray-500 mb-6">Enter the invite code from your game admin.</Text>
 
         <Input
           label="Invite Code"
@@ -68,33 +68,33 @@ export default function JoinGameScreen() {
 
         {foundGame && (
           <View className="mt-8">
-            <View className="bg-slate-800 rounded-2xl p-4 mb-4 border border-slate-700">
-              <Text className="text-white text-lg font-bold">{foundGame.name}</Text>
+            <View className="bg-gray-50 rounded-2xl p-4 mb-4 border border-gray-200">
+              <Text className="text-gray-900 text-lg font-bold">{foundGame.name}</Text>
               {foundGame.description && (
-                <Text className="text-slate-400 text-sm mt-1">{foundGame.description}</Text>
+                <Text className="text-gray-500 text-sm mt-1">{foundGame.description}</Text>
               )}
-              <Text className="text-slate-500 text-xs mt-2">{foundGame._count.tasks} tasks</Text>
+              <Text className="text-gray-400 text-xs mt-2">{foundGame._count.tasks} tasks</Text>
             </View>
 
-            <Text className="text-slate-300 font-semibold mb-3">Choose a team</Text>
+            <Text className="text-gray-600 font-semibold mb-3">Choose a team</Text>
 
             {foundGame.teams.map((team) => (
               <TouchableOpacity
                 key={team.id}
-                className="bg-slate-800 border border-slate-700 rounded-xl p-4 mb-2 flex-row items-center justify-between"
+                className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-2 flex-row items-center justify-between"
                 onPress={() => joinTeam(team.id)}
                 disabled={isJoining}
               >
                 <View>
-                  <Text className="text-white font-medium">{team.name}</Text>
-                  <Text className="text-slate-500 text-xs mt-0.5">{team._count.members} members</Text>
+                  <Text className="text-gray-900 font-medium">{team.name}</Text>
+                  <Text className="text-gray-400 text-xs mt-0.5">{team._count.members} members</Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#64748b" />
+                <Ionicons name="chevron-forward" size={18} color="#9CA3AF" />
               </TouchableOpacity>
             ))}
 
             {foundGame.teams.length === 0 && (
-              <Text className="text-slate-500 text-center py-4">No teams yet — ask the admin to create one</Text>
+              <Text className="text-gray-400 text-center py-4">No teams yet — ask the admin to create one</Text>
             )}
           </View>
         )}

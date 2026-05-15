@@ -79,41 +79,41 @@ export default function UsersScreen() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-slate-900 items-center justify-center">
-        <ActivityIndicator color="#3b82f6" />
+      <View className="flex-1 bg-white items-center justify-center">
+        <ActivityIndicator color="#1A8917" />
       </View>
     )
   }
 
   return (
-    <View className="flex-1 bg-slate-900">
+    <View className="flex-1 bg-white">
       {/* Total count */}
       <View className="px-4 pt-4 pb-2">
-        <Text className="text-slate-400 text-sm">{total} users total</Text>
+        <Text className="text-gray-500 text-sm">{total} users total</Text>
       </View>
 
       <FlatList
         data={users}
         keyExtractor={(u) => u.id}
-        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#3b82f6" />}
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#1A8917" />}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 24 }}
         ItemSeparatorComponent={() => <View className="h-2" />}
         renderItem={({ item: user }) => {
           const isMe = user.id === me?.id
           return (
-            <View className="bg-slate-800 rounded-xl p-4 border border-slate-700">
+            <View className="bg-gray-50 rounded-xl p-4 border border-gray-200">
               <View className="flex-row items-start justify-between">
                 <View className="flex-1 mr-3">
                   <View className="flex-row items-center gap-2 mb-0.5">
-                    <Text className="text-white font-semibold">{user.name}</Text>
+                    <Text className="text-gray-900 font-semibold">{user.name}</Text>
                     {isMe && (
-                      <View className="bg-blue-800 rounded-full px-2 py-0.5">
-                        <Text className="text-blue-200 text-xs">You</Text>
+                      <View className="bg-green-100 rounded-full px-2 py-0.5">
+                        <Text className="text-[#1A8917] text-xs">You</Text>
                       </View>
                     )}
                   </View>
-                  <Text className="text-slate-400 text-sm">{user.email}</Text>
-                  <Text className="text-slate-600 text-xs mt-1">
+                  <Text className="text-gray-500 text-sm">{user.email}</Text>
+                  <Text className="text-gray-400 text-xs mt-1">
                     Joined {new Date(user.createdAt).toLocaleDateString()}
                   </Text>
                 </View>
@@ -121,11 +121,11 @@ export default function UsersScreen() {
                 <View className="items-end gap-2">
                   {/* Role badge — tappable to toggle if not self */}
                   <TouchableOpacity
-                    className={`rounded-full px-3 py-1 ${user.role === 'ADMIN' ? 'bg-purple-900' : 'bg-slate-700'}`}
+                    className={`rounded-full px-3 py-1 ${user.role === 'ADMIN' ? 'bg-green-50' : 'bg-gray-100'}`}
                     onPress={() => !isMe && confirmRoleChange(user)}
                     disabled={isMe}
                   >
-                    <Text className={`text-xs font-semibold ${user.role === 'ADMIN' ? 'text-purple-300' : 'text-slate-300'}`}>
+                    <Text className={`text-xs font-semibold ${user.role === 'ADMIN' ? 'text-[#1A8917]' : 'text-gray-600'}`}>
                       {user.role}
                     </Text>
                   </TouchableOpacity>
@@ -148,31 +148,31 @@ export default function UsersScreen() {
           pages > 1 ? (
             <View className="flex-row items-center justify-between mt-4">
               <TouchableOpacity
-                className={`flex-row items-center gap-1 px-4 py-2 rounded-xl ${page <= 1 ? 'opacity-30' : 'bg-slate-800'}`}
+                className={`flex-row items-center gap-1 px-4 py-2 rounded-xl ${page <= 1 ? 'opacity-30' : 'bg-gray-50'}`}
                 onPress={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
               >
                 <Ionicons name="chevron-back" size={16} color="#94a3b8" />
-                <Text className="text-slate-300 text-sm">Prev</Text>
+                <Text className="text-gray-600 text-sm">Prev</Text>
               </TouchableOpacity>
 
-              <Text className="text-slate-500 text-sm">
+              <Text className="text-gray-400 text-sm">
                 Page {page} of {pages}
               </Text>
 
               <TouchableOpacity
-                className={`flex-row items-center gap-1 px-4 py-2 rounded-xl ${page >= pages ? 'opacity-30' : 'bg-slate-800'}`}
+                className={`flex-row items-center gap-1 px-4 py-2 rounded-xl ${page >= pages ? 'opacity-30' : 'bg-gray-50'}`}
                 onPress={() => setPage((p) => Math.min(pages, p + 1))}
                 disabled={page >= pages}
               >
-                <Text className="text-slate-300 text-sm">Next</Text>
+                <Text className="text-gray-600 text-sm">Next</Text>
                 <Ionicons name="chevron-forward" size={16} color="#94a3b8" />
               </TouchableOpacity>
             </View>
           ) : null
         }
         ListEmptyComponent={
-          <Text className="text-slate-600 text-center py-8">No users found</Text>
+          <Text className="text-gray-400 text-center py-8">No users found</Text>
         }
       />
     </View>
