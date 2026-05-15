@@ -36,7 +36,9 @@
       "Bash(for file:*)",
       "Bash(do)",
       "Bash(sed -i -e 's/text-blue-400/text-violet-400/g' -e 's/text-blue-300/text-violet-300/g' -e 's/text-blue-200/text-violet-200/g' -e 's/bg-blue-600/bg-violet-600/g' -e 's/bg-blue-700/bg-violet-700/g' -e 's/bg-blue-800/bg-violet-800/g' -e 's/bg-blue-900/bg-violet-900/g' -e 's/bg-blue-950/bg-violet-950/g' -e 's/border-blue-800/border-violet-800/g' -e 's/active:bg-blue-700/active:bg-violet-700/g' -e 's/#3b82f6/#a78bfa/g' -e 's/tintColor=\"\"[^\"\"]*blue[^\"\"]*\"\"/tintColor=\"\"#a78bfa\"\"/g' \"$file\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(export PATH=\"$PATH:/c/Users/Bartg/AppData/Local/Android/Sdk/platform-tools\")",
+      "Bash(adb install:*)"
     ]
   }
 }

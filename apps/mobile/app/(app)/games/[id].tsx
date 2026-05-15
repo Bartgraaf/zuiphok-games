@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity, Share, Alert, RefreshControl } from 'react-native'
 import { useLocalSearchParams, router, useNavigation, Stack } from 'expo-router'
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Ionicons } from '@expo/vector-icons'
 import { useAuthStore } from '../../../src/store/auth'
@@ -69,6 +69,18 @@ export default function GameDetailScreen() {
   const { mutate: joinTeam, isPending: isJoining } = useMutation({
     mutationFn: (teamId: string) => teamsService.join(teamId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['game', id] }),
+    onError: (err: Error) => Alert.alert('Error', err.message),
+  })
+
+  const [selectedPlayer, setSelectedPlayer] = useState<{ userId: string; name: string; teamId: string } | null>(null)
+
+  const { mutate: movePlayer, isPending: isMoving } = useMutation({
+    mutationFn: ({ userId, teamId }: { userId: string; teamId: string }) =>
+      teamsService.movePlayer(id, userId, teamId),
+    onSuccess: () => {
+      setSelectedPlayer(null)
+      queryClient.invalidateQueries({ queryKey: ['game', id] })
+    },
     onError: (err: Error) => Alert.alert('Error', err.message),
   })
 
@@ -242,6 +254,69 @@ export default function GameDetailScreen() {
             <Text className="text-gray-400 text-sm text-center py-4">No teams yet</Text>
           )}
         </View>
+
+        {/* Move Players section (admin only, 2+ teams) */}
+        {isAdmin && game.teams.length >= 2 && (
+          <View className="mt-6">
+            <Text className="text-gray-900 text-lg font-bold mb-3">Move Players</Text>
+            <View className="bg-gray-50 rounded-2xl p-4 border border-gray-200">
+              {selectedPlayer ? (
+                <View>
+                  <View className="flex-row items-center mb-3 bg-[#1A8917] rounded-xl px-3 py-2">
+                    <Ionicons name="person" size={14} color="white" />
+                    <Text className="text-white font-semibold text-sm ml-2 flex-1">{selectedPlayer.name}</Text>
+                    <TouchableOpacity onPress={() => setSelectedPlayer(null)}>
+                      <Ionicons name="close-circle" size={18} color="white" />
+                    </TouchableOpacity>
+                  </View>
+                  <Text className="text-gray-500 text-xs mb-2">Move to:</Text>
+                  <View className="flex-row flex-wrap gap-2">
+                    {game.teams
+                      .filter((t) => t.id !== selectedPlayer.teamId)
+                      .map((team) => (
+                        <TouchableOpacity
+                          key={team.id}
+                          className="bg-white border border-[#1A8917] rounded-xl px-3 py-2 flex-row items-center gap-1.5"
+                          onPress={() => movePlayer({ userId: selectedPlayer.userId, teamId: team.id })}
+                          disabled={isMoving}
+                        >
+                          <Ionicons name="swap-horizontal" size={14} color="#1A8917" />
+                          <Text className="text-[#1A8917] font-medium text-sm">{team.name}</Text>
+                        </TouchableOpacity>
+                      ))}
+                  </View>
+                </View>
+              ) : (
+                <View>
+                  <Text className="text-gray-400 text-xs mb-3">Tap a player to move them to another team</Text>
+                  {game.teams.map((team) => (
+                    <View key={team.id} className="mb-3">
+                      <Text className="text-gray-500 text-xs font-semibold mb-1.5 uppercase tracking-wide">
+                        {team.name}
+                      </Text>
+                      <View className="flex-row flex-wrap gap-2">
+                        {team.members.length === 0 ? (
+                          <Text className="text-gray-300 text-xs italic">No players</Text>
+                        ) : (
+                          team.members.map((m) => (
+                            <TouchableOpacity
+                              key={m.id}
+                              className="bg-white border border-gray-200 rounded-full px-3 py-1.5 flex-row items-center gap-1.5"
+                              onPress={() => setSelectedPlayer({ userId: m.userId, name: m.user.name, teamId: team.id })}
+                            >
+                              <Ionicons name="person-outline" size={12} color="#6B7280" />
+                              <Text className="text-gray-700 text-xs">{m.user.name}</Text>
+                            </TouchableOpacity>
+                          ))
+                        )}
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              )}
+            </View>
+          </View>
+        )}
       </View>
     </ScrollView>
   )

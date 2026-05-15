@@ -90,4 +90,25 @@ export async function teamsRoutes(fastify: FastifyInstance) {
     await prisma.teamMember.deleteMany({ where: { teamId, userId } })
     return reply.status(204).send()
   })
+
+  // Move player to a different team (admin only)
+  fastify.patch('/games/:gameId/players/:userId/team', auth, async (request, reply) => {
+    if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'Forbidden' })
+
+    const { gameId, userId } = request.params as { gameId: string; userId: string }
+    const { teamId } = request.body as { teamId: string }
+
+    if (!teamId) return reply.status(400).send({ error: 'teamId is required' })
+
+    // Verify target team belongs to this game
+    const targetTeam = await prisma.team.findFirst({ where: { id: teamId, gameId } })
+    if (!targetTeam) return reply.status(404).send({ error: 'Team not found in this game' })
+
+    await prisma.$transaction([
+      prisma.teamMember.deleteMany({ where: { userId, team: { gameId } } }),
+      prisma.teamMember.create({ data: { userId, teamId } }),
+    ])
+
+    return reply.send({ ok: true })
+  })
 }
