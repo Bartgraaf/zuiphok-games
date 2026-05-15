@@ -221,14 +221,20 @@ export default function GameDetailScreen() {
                     </TouchableOpacity>
                   )}
                 </View>
-                <View className="flex-row flex-wrap gap-2">
+                <View className="flex-row flex-wrap gap-2 flex-1">
                   {team.members.map((m) => (
                     <Text key={m.id} className="text-slate-400 text-xs bg-slate-700 rounded-full px-2 py-0.5">
                       {m.user.name}
                     </Text>
                   ))}
                 </View>
-              </View>
+                {isAdmin && (
+                  <View className="flex-row items-center mt-2">
+                    <Text className="text-blue-500 text-xs mr-1">Review</Text>
+                    <Ionicons name="chevron-forward" size={12} color="#3b82f6" />
+                  </View>
+                )}
+              </TouchableOpacity>
             )
           })}
 
