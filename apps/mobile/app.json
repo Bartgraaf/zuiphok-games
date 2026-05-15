@@ -58,6 +58,7 @@
       "typedRoutes": true
     },
     "extra": {
+      "apiUrl": "http://141.148.245.2",
       "router": {},
       "eas": {
         "projectId": "4a6e140e-33c1-4247-9d7c-1bc4ec93beff"
