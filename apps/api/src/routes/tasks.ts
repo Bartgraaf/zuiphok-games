@@ -72,4 +72,38 @@ export async function tasksRoutes(fastify: FastifyInstance) {
     ;(fastify as any).io?.to(`game:${task.gameId}`).emit('task:deleted', { taskId })
     return reply.status(204).send()
   })
+
+  // Get all completions for a team
+  fastify.get('/teams/:teamId/completions', auth, async (request, reply) => {
+    const { teamId } = request.params as { teamId: string }
+    const completions = await prisma.taskCompletion.findMany({
+      where: { teamId },
+      include: { markedBy: { select: { id: true, name: true } } },
+    })
+    return reply.send({ completions })
+  })
+
+  // Mark a task complete for a team (admin only)
+  fastify.post('/tasks/:taskId/teams/:teamId/complete', auth, async (request, reply) => {
+    if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'Forbidden' })
+
+    const { taskId, teamId } = request.params as { taskId: string; teamId: string }
+
+    const completion = await prisma.taskCompletion.upsert({
+      where: { taskId_teamId: { taskId, teamId } },
+      update: { markedById: request.user.sub, markedAt: new Date() },
+      create: { taskId, teamId, markedById: request.user.sub },
+      include: { markedBy: { select: { id: true, name: true } } },
+    })
+    return reply.status(201).send({ completion })
+  })
+
+  // Unmark a task completion (admin only)
+  fastify.delete('/tasks/:taskId/teams/:teamId/complete', auth, async (request, reply) => {
+    if (request.user.role !== 'ADMIN') return reply.status(403).send({ error: 'Forbidden' })
+
+    const { taskId, teamId } = request.params as { taskId: string; teamId: string }
+    await prisma.taskCompletion.deleteMany({ where: { taskId, teamId } })
+    return reply.status(204).send()
+  })
 }

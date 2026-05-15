@@ -16,8 +16,9 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  teamMembers TeamMember[]
-  submissions Submission[]
+  teamMembers  TeamMember[]
+  submissions  Submission[]
+  completions  TaskCompletion[]
 }
 
 enum Role {
@@ -52,9 +53,10 @@ model Team {
   gameId    String
   createdAt DateTime @default(now())
 
-  game        Game         @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  game        Game             @relation(fields: [gameId], references: [id], onDelete: Cascade)
   members     TeamMember[]
   submissions Submission[]
+  completions TaskCompletion[]
 }
 
 model TeamMember {
@@ -80,8 +82,23 @@ model Task {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
-  game        Game         @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  game        Game             @relation(fields: [gameId], references: [id], onDelete: Cascade)
   submissions Submission[]
+  completions TaskCompletion[]
+}
+
+model TaskCompletion {
+  id         String   @id @default(cuid())
+  taskId     String
+  teamId     String
+  markedById String
+  markedAt   DateTime @default(now())
+
+  task     Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  team     Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  markedBy User @relation(fields: [markedById], references: [id])
+
+  @@unique([taskId, teamId])
 }
 
 enum TaskType {

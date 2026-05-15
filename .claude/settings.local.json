@@ -30,7 +30,9 @@
       "Bash(find C:/Users/Bartg -name *.apk -path *expo*)",
       "Bash(find C:/Users/Bartg/AppData -name *.apk -path *expo*)",
       "Bash(\"$ADB\" install:*)",
-      "Bash(\"$ADB\" wait-for-device:*)"
+      "Bash(\"$ADB\" wait-for-device:*)",
+      "Bash(node -e \":*)",
+      "Bash(\"$ADB\" devices:*)"
     ]
   }
 }
