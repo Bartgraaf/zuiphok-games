@@ -29,7 +29,8 @@
       "Bash(ADB=\"C:/Users/Bartg/AppData/Local/Android/Sdk/platform-tools/adb.exe\" \"$ADB\" devices)",
       "Bash(find C:/Users/Bartg -name *.apk -path *expo*)",
       "Bash(find C:/Users/Bartg/AppData -name *.apk -path *expo*)",
-      "Bash(\"$ADB\" install:*)"
+      "Bash(\"$ADB\" install:*)",
+      "Bash(\"$ADB\" wait-for-device:*)"
     ]
   }
 }

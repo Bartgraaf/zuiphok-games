@@ -196,7 +196,12 @@ export default function GameDetailScreen() {
             const canJoin = !myTeam && !isAdmin && game.status !== 'FINISHED'
 
             return (
-              <View key={team.id} className={`rounded-xl p-4 mb-2 border ${isMine ? 'bg-blue-950 border-blue-800' : 'bg-slate-800 border-slate-700'}`}>
+              <TouchableOpacity
+                key={team.id}
+                className={`rounded-xl p-4 mb-2 border ${isMine ? 'bg-blue-950 border-blue-800' : 'bg-slate-800 border-slate-700'}`}
+                onPress={() => isAdmin && router.push(`/(app)/games/${id}/teams/${team.id}/review`)}
+                activeOpacity={isAdmin ? 0.7 : 1}
+              >
                 <View className="flex-row items-center justify-between mb-2">
                   <View className="flex-row items-center gap-2">
                     <Text className="text-white font-semibold">{team.name}</Text>

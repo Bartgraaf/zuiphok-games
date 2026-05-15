@@ -26,6 +26,7 @@ export default function AppLayout() {
       <Stack.Screen name="games/[id]/tasks/[taskId]" options={{ title: 'Task' }} />
       <Stack.Screen name="games/[id]/tasks/create" options={{ title: 'New Task', presentation: 'modal' }} />
       <Stack.Screen name="games/[id]/teams/index" options={{ title: 'Teams', presentation: 'modal' }} />
+      <Stack.Screen name="games/[id]/teams/[teamId]/review" options={{ title: 'Team Review' }} />
     </Stack>
   )
 }
