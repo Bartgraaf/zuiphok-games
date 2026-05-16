@@ -214,12 +214,15 @@ export default function TeamReviewScreen() {
                       ) : null}
 
                       {sub.locationLat != null && (
-                        <View className="flex-row items-center gap-1 mb-2">
+                        <TouchableOpacity
+                          className="flex-row items-center gap-1 mb-2"
+                          onPress={() => Linking.openURL(`geo:${sub.locationLat},${sub.locationLng}?q=${sub.locationLat},${sub.locationLng}`)}
+                        >
                           <Ionicons name="location" size={12} color="#4ade80" />
-                          <Text className="text-[#1A8917] text-xs">
+                          <Text className="text-[#1A8917] text-xs underline">
                             {sub.locationLat.toFixed(4)}, {sub.locationLng?.toFixed(4)}
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                       )}
 
                       {sub.media.length > 0 && (

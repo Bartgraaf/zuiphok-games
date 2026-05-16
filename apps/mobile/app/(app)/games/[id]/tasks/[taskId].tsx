@@ -1,6 +1,6 @@
 import {
   View, Text, ScrollView, TextInput, TouchableOpacity,
-  Alert, Image, ActivityIndicator, RefreshControl,
+  Alert, Image, ActivityIndicator, RefreshControl, Linking,
 } from 'react-native'
 import { useLocalSearchParams, Stack } from 'expo-router'
 import { useState, useEffect, useRef, useCallback } from 'react'
@@ -393,12 +393,15 @@ function SubmissionCard({ submission, currentUserId }: { submission: Submission;
       )}
 
       {submission.locationLat != null && (
-        <View className="flex-row items-center gap-1 mb-2">
+        <TouchableOpacity
+          className="flex-row items-center gap-1 mb-2"
+          onPress={() => Linking.openURL(`geo:${submission.locationLat},${submission.locationLng}?q=${submission.locationLat},${submission.locationLng}`)}
+        >
           <Ionicons name="location" size={12} color="#4ade80" />
-          <Text className="text-[#1A8917] text-xs">
+          <Text className="text-[#1A8917] text-xs underline">
             {submission.locationLat.toFixed(4)}, {submission.locationLng?.toFixed(4)}
           </Text>
-        </View>
+        </TouchableOpacity>
       )}
 
       {submission.media.length > 0 && (

@@ -205,7 +205,7 @@ export default function GameDetailScreen() {
 
           {game.teams.map((team) => {
             const isMine = myTeam?.id === team.id
-            const canJoin = !myTeam && !isAdmin && game.status !== 'FINISHED'
+            const canJoin = !myTeam && game.status !== 'FINISHED'
 
             return (
               <TouchableOpacity
